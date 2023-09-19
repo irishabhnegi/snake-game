@@ -2,16 +2,16 @@ const gameBoard = document.querySelector('.game-board')
 
 let inputDirection = { x: -1, y: 0 }
 
-const snakeArr = [
+let snakeArr = [
   {
-    x: 16,
-    y: 16,
+    x: 15,
+    y: 15,
   },
 ]
 let foodObj = { x: 4, y: 4 }
 
 let lastTime = 0
-let SPEED = 5
+let SPEED = 5.5
 
 function main(ctime) {
   window.requestAnimationFrame(main)
@@ -23,11 +23,38 @@ function main(ctime) {
 window.requestAnimationFrame(main)
 
 function gameLogic() {
-  // updating the game
+  if (
+    snakeArr[0].x > 18 ||
+    snakeArr[0].y > 18 ||
+    snakeArr[0].x < 0 ||
+    snakeArr[0].y < 0
+  ) {
+    alert('you lose! you hit the wall.')
+    inputDirection = { x: -1, y: 0 }
+    return (snakeArr = [
+      {
+        x: 16,
+        y: 16,
+      },
+    ])
+  }
+  for (let i = 1; i < snakeArr.length; i++) {
+    if (snakeArr[0].x === snakeArr[i].x && snakeArr[0].y === snakeArr[i].y) {
+      alert('you lose! you eat yourself')
+      inputDirection = { x: -1, y: 0 }
+      return (snakeArr = [
+        {
+          x: 16,
+          y: 16,
+        },
+      ])
+    }
+  }
   if (snakeArr[0].x === foodObj.x && snakeArr[0].y === foodObj.y) {
+    // updating the game
     foodObj = {
-      x: Math.floor(Math.random() * 18),
-      y: Math.floor(Math.random() * 18),
+      x: Math.floor(Math.random() * (16 - 2 + 1) + 2),
+      y: Math.floor(Math.random() * (16 - 2 + 1) + 2),
     }
     snakeArr.unshift({ x: snakeArr[0].x, y: snakeArr[0].y })
   }
@@ -53,7 +80,6 @@ function gameLogic() {
   food.style.gridRowStart = foodObj.x
   food.style.gridColumnStart = foodObj.y
   gameBoard.append(food)
-  //   console.log(inputDirection)
 }
 
 window.addEventListener('keydown', (e) => {
