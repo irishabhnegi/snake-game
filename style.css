@@ -33,3 +33,6 @@ body {
 .snake {
   background-color: red;
 }
+.head {
+  background-color: rgb(214, 0, 0);
+}

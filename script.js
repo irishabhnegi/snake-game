@@ -31,6 +31,7 @@ function gameLogic() {
   ) {
     alert('you lose! you hit the wall.')
     inputDirection = { x: -1, y: 0 }
+    foodObj = { x: 4, y: 4 }
     return (snakeArr = [
       {
         x: 16,
@@ -42,6 +43,7 @@ function gameLogic() {
     if (snakeArr[0].x === snakeArr[i].x && snakeArr[0].y === snakeArr[i].y) {
       alert('you lose! you eat yourself')
       inputDirection = { x: -1, y: 0 }
+      foodObj = { x: 4, y: 4 }
       return (snakeArr = [
         {
           x: 16,
@@ -69,9 +71,12 @@ function gameLogic() {
   gameBoard.innerHTML = ''
   snakeArr.forEach((e, index) => {
     const snake = document.createElement('div')
-    snake.classList.add('snake')
     snake.style.gridRowStart = e.x
     snake.style.gridColumnStart = e.y
+    if (index === 0) {
+      snake.classList.add('head')
+    }
+    snake.classList.add('snake')
     gameBoard.append(snake)
   })
 
